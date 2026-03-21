@@ -75,7 +75,7 @@ async def startuparea(ctx):
     memchk = subprocess.run(["powershell.exe", "Get-VMMemory", vmname, "|", "Select-Object", "-ExpandProperty", "Startup"], capture_output=True, text=True)
     
     memchk = int((int(memchk.stdout) - 400000000)/1000000000) #first convert string to int then subtract 400 million then divide by 100 million then truncate the decimal 
-    await ctx.send("Sending `Start-VM -Name %s` command with " + str(memchk) + "gb of RAM..." % vmname) 
+    await ctx.send(f"Sending `Start-VM -Name {vmname}` command with " + str(memchk) + "gb of RAM...") 
     result = subprocess.run(["powershell.exe", "Start-VM", "-Name", vmname], capture_output=True, text=True)
 
     #print(result.stdout)
@@ -101,11 +101,11 @@ async def startuparea(ctx):
 
 async def forceshutoff(ctx):
     global vmname
-    await ctx.send('''
-Sending `Stop-VM -Name %s -TurnOff` command...
+    await ctx.send(f'''
+Sending `Stop-VM -Name {vmname} -TurnOff` command...
 ```diff
 -Force shutdown init...
-```'''% vmname)
+```''')
     result = subprocess.run(["powershell.exe", "Stop-VM", "-Name", vmname, "-TurnOff"], capture_output=True, text=True) 
 
     if result.stderr:
@@ -124,7 +124,7 @@ Sending `Stop-VM -Name %s -TurnOff` command...
 
 async def shutoff(ctx):
     global vmname
-    await ctx.send("Sending `Stop-VM -Name %s` command..." % vmname)
+    await ctx.send(f"Sending `Stop-VM -Name {vmname}` command...")
     result = subprocess.run(["powershell.exe", "Stop-VM", "-Name", vmname], capture_output=True, text=True)
     if result.stderr:
         await ctx.send('''```ansi
@@ -142,7 +142,7 @@ async def shutoff(ctx):
 async def setmemowy(ctx, intarg):
     global vmname
     result = subprocess.run(["powershell.exe", "Set-VMMemory", vmname, "-StartupBytes", str(intarg)+"GB"], capture_output=True, text=True)
-    await ctx.send("Sending `Set-VMMemory %s -StartupBytes "+str(intarg)+"GB` command..." % vmname)
+    await ctx.send(f"Sending `Set-VMMemory {vmname} -StartupBytes "+str(intarg)+"GB` command...")
 
     if result.stderr:
         await ctx.send('''```ansi
