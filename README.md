@@ -3,7 +3,7 @@ A Discord bot that allows you to remotely turn on your HyperV VM via Discord. Th
 
 ## ※**This bot runs with administration privileges to access the HyperV commands, use with caution!!**
 ### Prerequisites:
-- Installed have have running a HyperV VM (You can use [Easy-GPU-PV](https://github.com/jamesstringer90/Easy-GPU-PV/tree/main) for example)
+- Installed and running a HyperV VM (You can use [Easy-GPU-PV](https://github.com/jamesstringer90/Easy-GPU-PV/tree/main) for example)
 - Python 3.10.x
 ### Installation:
 1. Download the repository and edit the `settings.json` file with the name of your HyperV VM and your Discord bot token.
