@@ -28,6 +28,7 @@ bot = commands.Bot(command_prefix="~", intents=intents)
 
 #the name of the hyperV instance
 vmname = data["vmname"]
+hostid = data["hostid"]
 ##force otu abort
 
 async def cynabortion(ctx):
@@ -157,7 +158,7 @@ async def setmemowy(ctx, intarg):
 
 async def oturebooty(ctx):
     await ctx.send("Sending `Restart-Computer -Force` command...")
-    await ctx.send("Mahiro/OcTiU-I shutting down.. have a good night..")
+    await ctx.send("Mahiro shutting down.. have a good night..")
     subprocess.run(["powershell.exe", "Restart-Computer", "-Force"])
     
 
@@ -267,21 +268,21 @@ async def rebot(ctx):
 
 @bot.hybrid_command(name='otureboot', description="Requires the host's consent! bare metal reboot")
 async def nturebot(ctx):
-    global pre_BMreboot
+    global pre_BMreboot, hostid
     match pre_BMreboot:
         case 0:
             await ctx.send("**Disclaimer!** This requires the host's approval. I need her approval before i'm able to rebooter her computer\ndo you wish to continue? [send ~otureboot to request for the host's consent]")
             pre_BMreboot = 1 #changes to the second stage
         case 1:
-            await ctx.send("<@266032204243533825> requesting for restart of your pc. do you accept? [send ~otureboot]")
+            await ctx.send(f"<@{hostid}> requesting for restart of your pc. do you accept? [send ~otureboot]")
             pre_BMreboot = 2 #changes to the third stage
         case 2:
-            if str(ctx.message.author.id) == '266032204243533825':
-                await ctx.send("Authorized consent! rebooting OcTiU-I...")
+            if str(ctx.message.author.id) == hostid:
+                await ctx.send("Authorized consent! rebooting server...")
                 pre_BMreboot = 0 #resets back this area is when two parties consented for bare metal reboot
                 await oturebooty(ctx)
             else:
-                await ctx.send("Unauthorized consent! only <@266032204243533825> is allowed to accept")
+                await ctx.send(f"Unauthorized consent! only <@{hostid}> is allowed to accept")
 
 @bot.hybrid_command(name='oturebootforce', description="Force the host's pc to reboot")
 async def fnturebot(ctx):
